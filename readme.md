@@ -35,7 +35,6 @@ Load the extension manually:
 - Custom dictionary for word replacements
 - Wildcard hostname matching for site rules
 - 43 interface languages
-- Keyboard shortcuts for common actions
 
 ## Screenshots
 
