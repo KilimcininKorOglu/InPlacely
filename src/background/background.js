@@ -515,17 +515,17 @@ twpConfig.onReady(() => {
       const isUsingTheme = false;
       const isFirefoxAlpenglowTheme = false;
 
-      let darkMode = false;
-      darkMode = matchMedia("(prefers-color-scheme: dark)").matches;
+      // A service worker has no matchMedia, so the OS theme cannot be probed
+      // here. Follow the darkMode setting instead and treat "auto" as light.
+      let darkMode = twpConfig.get("darkMode") === "yes";
       updateIconInAllTabs();
 
-      matchMedia("(prefers-color-scheme: dark)").addEventListener(
-        "change",
-        () => {
-          darkMode = matchMedia("(prefers-color-scheme: dark)").matches;
+      twpConfig.onChanged((name, newvalue) => {
+        if (name === "darkMode") {
+          darkMode = newvalue === "yes";
           updateIconInAllTabs();
         }
-      );
+      });
 
       function getSVGIcon(incognito = false) {
         const svgXml = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
