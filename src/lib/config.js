@@ -70,7 +70,15 @@ const twpConfig = (function () {
    */
   function readyConfig() {
     configIsReady = true;
-    onReadyObservers.forEach((callback) => callback());
+    // isolate the callbacks; one that throws must not stop the remaining
+    // observers from running or leave the ready promise pending forever
+    onReadyObservers.forEach((callback) => {
+      try {
+        callback();
+      } catch (e) {
+        console.error(e);
+      }
+    });
     onReadyObservers = [];
     onReadyResolvePromise();
   }
