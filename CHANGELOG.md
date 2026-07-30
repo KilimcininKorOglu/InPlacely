@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.4] - 2026-07-31
+
+### Changed
+- Remove stale keyboard shortcuts from README
+
+### Fixed
+- Fall back to google when a stored translation service no longer exists
+
+### Removed
+- Delete leftover LibreTranslate UI and handlers
+
 ## [1.0.3] - 2026-05-13
 
 ### Removed
