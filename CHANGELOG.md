@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.5] - 2026-07-31
+
+### Fixed
+- Follow the darkMode setting instead of matchMedia in the service worker
+- Isolate onReady observers so one failure cannot abort the rest
+
 ## [1.0.4] - 2026-07-31
 
 ### Changed
