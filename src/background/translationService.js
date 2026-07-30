@@ -840,12 +840,13 @@ const translationService = (function () {
 
   /**
    * Get translation service from your name
-   * Make sure the service is enabled
+   * Falls back to google, because settings stored by older versions may still
+   * name a service that no longer exists.
    * @param {string} serviceName
    * @returns {Service} service
    */
   const getSafeServiceByName = (serviceName) => {
-    return serviceList.get(serviceName) || null;
+    return serviceList.get(serviceName) || serviceList.get("google");
   };
 
   translationService.translateHTML = async (

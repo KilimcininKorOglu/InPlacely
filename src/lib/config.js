@@ -231,6 +231,15 @@ const twpConfig = (function () {
         config[name] = fixObjectType(name, onGot[name]);
       }
 
+      // settings stored by older versions may name a translation service that
+      // was removed, so reset those back to the only remaining service
+      for (const name of ["pageTranslatorService", "textTranslatorService"]) {
+        if (config[name] !== "google") {
+          config[name] = "google";
+          chrome.storage.local.set({ [name]: "google" });
+        }
+      }
+
       // if there are any targetLanguage undefined, replace them
       if (config.targetLanguages.some((tl) => !tl)) {
         config.targetLanguages = [...defaultTargetLanguages];
