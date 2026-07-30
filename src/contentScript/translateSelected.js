@@ -231,7 +231,6 @@ Promise.all([twpConfig.onReady(), getTabHostName()]).then(function (_) {
 				<div id="moreOrLess"><i class="arrow up" id="more"></i><i class="arrow down" id="less"></i></div>
 				<ul>
 					<li title="Google" id="sGoogle">g</li>
-					<li title="Libretranslate" id="sLibre" hidden>l</li>
 					<li style="opacity: 0; cursor: move;">O</li>
 				</ul>
 			</div>
@@ -361,7 +360,6 @@ Promise.all([twpConfig.onReady(), getTabHostName()]).then(function (_) {
     const eLess = shadowRoot.getElementById("less");
 
     const sGoogle = shadowRoot.getElementById("sGoogle");
-    const sLibre = shadowRoot.getElementById("sLibre");
     const eCopy = shadowRoot.getElementById("copy");
     const eReplace = shadowRoot.getElementById("replace");
 
@@ -464,20 +462,7 @@ Promise.all([twpConfig.onReady(), getTabHostName()]).then(function (_) {
       twpConfig.set("textTranslatorService", "google");
       translateNewInput();
 
-      sGoogle.classList.remove("selected");
-      sLibre.classList.remove("selected");
-
       sGoogle.classList.add("selected");
-    };
-    sLibre.onclick = () => {
-      currentTextTranslatorService = "libre";
-      twpConfig.set("textTranslatorService", "libre");
-      translateNewInput();
-
-      sGoogle.classList.remove("selected");
-      sLibre.classList.remove("selected");
-
-      sLibre.classList.add("selected");
     };
 
     const setTargetLanguage = shadowRoot.getElementById("setTargetLanguage");
@@ -530,17 +515,7 @@ Promise.all([twpConfig.onReady(), getTabHostName()]).then(function (_) {
       );
     }
 
-    if (currentTextTranslatorService == "libre") {
-      sLibre.classList.add("selected");
-    } else {
-      sGoogle.classList.add("selected");
-    }
-
-    if (twpConfig.get("customServices").find((cs) => cs.name === "libre")) {
-      sLibre.removeAttribute("hidden");
-    } else {
-      sLibre.setAttribute("hidden", "");
-    }
+    sGoogle.classList.add("selected");
 
     if (
       twpConfig.get("expandPanelTranslateSelectedText") === "yes" ||
@@ -561,14 +536,6 @@ Promise.all([twpConfig.onReady(), getTabHostName()]).then(function (_) {
 
     twpConfig.onChanged((name, newvalue) => {
       switch (name) {
-        case "customServices": {
-          if (newvalue.find((cs) => cs.name === "libre")) {
-            sLibre.removeAttribute("hidden");
-          } else {
-            sLibre.setAttribute("hidden", "");
-          }
-          break;
-        }
         case "expandPanelTranslateSelectedText":
           const prevHeight = parseInt(getComputedStyle(eDivResult).height);
           if (newvalue === "yes") {

@@ -119,7 +119,6 @@ twpConfig
     const eTextTranslated = document.getElementById("eTextTranslated");
 
     const sGoogle = document.getElementById("sGoogle");
-    const sLibre = document.getElementById("sLibre");
     const eCopy = document.getElementById("copy");
 
     eCopy.onclick = () => {
@@ -155,20 +154,7 @@ twpConfig
       twpConfig.set("textTranslatorService", "google");
       translateText();
 
-      sGoogle.classList.remove("selected");
-      sLibre.classList.remove("selected");
-
       sGoogle.classList.add("selected");
-    };
-    sLibre.onclick = () => {
-      currentTextTranslatorService = "libre";
-      twpConfig.set("textTranslatorService", "libre");
-      translateText();
-
-      sGoogle.classList.remove("selected");
-      sLibre.classList.remove("selected");
-
-      sLibre.classList.add("selected");
     };
 
     const setTargetLanguage = document.getElementById("setTargetLanguage");
@@ -208,38 +194,8 @@ twpConfig
       );
     }
 
-    switch (currentTextTranslatorService) {
-      case "google":
-        sGoogle.classList.add("selected");
-        break;
-      case "libre":
-        sLibre.classList.add("selected");
-        break;
-      default:
-        sGoogle.classList.add("selected");
-        break;
-    }
-
+    sGoogle.classList.add("selected");
     sGoogle.removeAttribute("hidden");
-
-    if (twpConfig.get("customServices").find((cs) => cs.name === "libre")) {
-      sLibre.removeAttribute("hidden");
-    } else {
-      sLibre.setAttribute("hidden", "");
-    }
-
-    twpConfig.onChanged((name, newvalue) => {
-      switch (name) {
-        case "customServices": {
-          if (newvalue.find((cs) => cs.name === "libre")) {
-            sLibre.removeAttribute("hidden");
-          } else {
-            sLibre.setAttribute("hidden", "");
-          }
-          break;
-        }
-      }
-    });
 
     function translateText() {
 

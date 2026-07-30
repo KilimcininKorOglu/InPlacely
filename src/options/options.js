@@ -1067,65 +1067,6 @@ twpConfig
     };
 
     // experimental options
-    $("#addLibre").onclick = () => {
-      const libre = {
-        name: "libre",
-        url: $("#libreURL").value,
-        apiKey: $("#libreKEY").value,
-      };
-      try {
-        new URL(libre.url);
-        if (libre.apiKey.length < 10) {
-          throw new Error("Provides an API Key");
-        }
-
-        const customServices = twpConfig.get("customServices");
-
-        const index = customServices.findIndex((cs) => cs.name === "libre");
-        if (index !== -1) {
-          customServices.splice(index, 1);
-        }
-
-        customServices.push(libre);
-        twpConfig.set("customServices", customServices);
-        chrome.runtime.sendMessage({ action: "createLibreService", libre });
-      } catch (e) {
-        alert(e);
-      }
-    };
-
-    $("#removeLibre").onclick = () => {
-      const customServices = twpConfig.get("customServices");
-      const index = customServices.findIndex((cs) => cs.name === "libre");
-
-      if (index !== -1) {
-        customServices.splice(index, 1);
-        twpConfig.set("customServices", customServices);
-        chrome.runtime.sendMessage(
-          { action: "removeLibreService" },
-          checkedLastError
-        );
-      }
-
-      if (twpConfig.get("textTranslatorService") === "libre") {
-        twpConfig.set(
-          "textTranslatorService",
-          twpConfig.get("pageTranslatorService")
-        );
-      }
-
-      $("#libreURL").value = "";
-      $("#libreKEY").value = "";
-    };
-
-    const libre = twpConfig
-      .get("customServices")
-      .find((cs) => cs.name === "libre");
-    if (libre) {
-      $("#libreURL").value = libre.url;
-      $("#libreKEY").value = libre.apiKey;
-    }
-
     $("#showMobilePopupOnDesktop").onchange = (e) => {
       twpConfig.set("showMobilePopupOnDesktop", e.target.value);
     };
